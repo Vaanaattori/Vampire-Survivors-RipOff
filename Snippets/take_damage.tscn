@@ -2,8 +2,11 @@
 
 [ext_resource type="Script" path="res://Snippets/TakeDamage.gd" id="1_hohl6"]
 
-[node name="TakeDamage" type="Node2D"]
+[node name="TakeDamage" type="Node2D" node_paths=PackedStringArray("HealthNode")]
 script = ExtResource("1_hohl6")
+HealthNode = NodePath("")
 
-[node name="Timer" type="Timer" parent="."]
+[node name="TakeDMG_CD" type="Timer" parent="."]
 one_shot = true
+
+[connection signal="timeout" from="TakeDMG_CD" to="." method="OnDamageTakenCD"]

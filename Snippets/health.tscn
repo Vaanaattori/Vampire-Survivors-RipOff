@@ -6,3 +6,5 @@
 script = ExtResource("1_1c8lj")
 
 [node name="RegenCD" type="Timer" parent="."]
+
+[connection signal="timeout" from="RegenCD" to="." method="RegenTimeout"]

@@ -1,12 +1,12 @@
-[gd_scene load_steps=25 format=3 uid="uid://2nps2evg3bsm"]
+[gd_scene load_steps=27 format=3 uid="uid://2nps2evg3bsm"]
 
 [ext_resource type="Texture2D" uid="uid://dlti5x7jgy57m" path="res://Downloads/Adventurer/adventurer-Sheet.png" id="1_d11cv"]
 [ext_resource type="Script" path="res://player.gd" id="1_ypet8"]
 [ext_resource type="Texture2D" uid="uid://b1y5rkvr8oekk" path="res://Downloads/Adventurer/black-circle.png" id="3_0s4hf"]
-[ext_resource type="Script" path="res://Snippets/Health.gd" id="4_3kmln"]
-[ext_resource type="Script" path="res://Snippets/TakeDamage.gd" id="5_n32mn"]
+[ext_resource type="PackedScene" uid="uid://dkg4a6o6qxc64" path="res://Snippets/health.tscn" id="4_jlhnk"]
+[ext_resource type="PackedScene" uid="uid://bdqnsfimdvq7h" path="res://Snippets/take_damage.tscn" id="5_dk0n6"]
 [ext_resource type="PackedScene" uid="uid://bdomxuy3h6a3h" path="res://Snippets/movement_turn.tscn" id="6_nllu8"]
-[ext_resource type="Script" path="res://Snippets/HealthBar.gd" id="7_v73uc"]
+[ext_resource type="PackedScene" uid="uid://dew6oukkv5q3a" path="res://Snippets/health_bar.tscn" id="7_4v8v3"]
 [ext_resource type="Script" path="res://RockThrow.gd" id="8_gtgxj"]
 [ext_resource type="Script" path="res://Pointer.gd" id="9_scuth"]
 [ext_resource type="Texture2D" uid="uid://dy0dp13nqr5fe" path="res://Arrow.png" id="10_qtm7h"]
@@ -29,6 +29,22 @@ region = Rect2(100, 0, 50, 37)
 [sub_resource type="AtlasTexture" id="AtlasTexture_8fs0m"]
 atlas = ExtResource("1_d11cv")
 region = Rect2(150, 0, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_078qe"]
+atlas = ExtResource("1_d11cv")
+region = Rect2(200, 74, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5t7h1"]
+atlas = ExtResource("1_d11cv")
+region = Rect2(250, 74, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p1ae0"]
+atlas = ExtResource("1_d11cv")
+region = Rect2(300, 74, 50, 37)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gntw4"]
+atlas = ExtResource("1_d11cv")
+region = Rect2(0, 111, 50, 37)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qs333"]
 atlas = ExtResource("1_d11cv")
@@ -74,6 +90,23 @@ animations = [{
 "speed": 4.0
 }, {
 "frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_078qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5t7h1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p1ae0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gntw4")
+}],
+"loop": true,
+"name": &"Roll",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 0.5,
 "texture": SubResource("AtlasTexture_qs333")
 }, {
@@ -97,13 +130,8 @@ animations = [{
 "speed": 4.0
 }]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0lwfi"]
-bg_color = Color(0.0980392, 0.0980392, 0.0980392, 0.784314)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dadwk"]
-bg_color = Color(1, 0, 0, 0.784314)
-
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("Animated_Sprite")]
+collision_mask = 5
 script = ExtResource("1_ypet8")
 Animated_Sprite = NodePath("AnimatedSprite")
 SPEED = 50
@@ -118,7 +146,6 @@ position = Vector2(-1, -17.5)
 sprite_frames = SubResource("SpriteFrames_4ctt6")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.400544
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(0, -29)
@@ -130,17 +157,10 @@ position = Vector2(-1, 0)
 scale = Vector2(-0.042003, 0.0108418)
 texture = ExtResource("3_0s4hf")
 
-[node name="Health" type="Node2D" parent="."]
-script = ExtResource("4_3kmln")
+[node name="Health" parent="." instance=ExtResource("4_jlhnk")]
 
-[node name="RegenCD" type="Timer" parent="Health"]
-
-[node name="TakeDamage" type="Node2D" parent="." node_paths=PackedStringArray("HealthNode")]
-script = ExtResource("5_n32mn")
+[node name="TakeDamage" parent="." node_paths=PackedStringArray("HealthNode") instance=ExtResource("5_dk0n6")]
 HealthNode = NodePath("../Health")
-
-[node name="TakeDMG_CD" type="Timer" parent="TakeDamage"]
-one_shot = true
 
 [node name="Player" type="Node" parent="."]
 
@@ -149,16 +169,7 @@ editor_description = "Turns sprite to match the direction of velocity.x"
 Character_Body = NodePath("..")
 Animated_Sprite = NodePath("../AnimatedSprite")
 
-[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("HealthNode")]
-offset_left = -11.0
-offset_top = -37.0
-offset_right = -7.0
-offset_bottom = -10.0
-scale = Vector2(4.95025, 0.140374)
-theme_override_styles/background = SubResource("StyleBoxFlat_0lwfi")
-theme_override_styles/fill = SubResource("StyleBoxFlat_dadwk")
-show_percentage = false
-script = ExtResource("7_v73uc")
+[node name="HealthBar" parent="." node_paths=PackedStringArray("HealthNode") instance=ExtResource("7_4v8v3")]
 HealthNode = NodePath("../Health")
 
 [node name="Shoot" type="Node2D" parent="." node_paths=PackedStringArray("Player")]
@@ -178,6 +189,4 @@ position = Vector2(25, 0)
 scale = Vector2(0.475365, 0.75)
 texture = ExtResource("10_qtm7h")
 
-[connection signal="timeout" from="Health/RegenCD" to="Health" method="RegenTimeout"]
-[connection signal="timeout" from="TakeDamage/TakeDMG_CD" to="TakeDamage" method="OnDamageTakenCD"]
 [connection signal="timeout" from="Shoot/FireRate" to="Shoot" method="_on_firerate_timeout"]

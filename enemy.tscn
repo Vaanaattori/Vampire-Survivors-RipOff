@@ -1,0 +1,44 @@
+[gd_scene load_steps=8 format=3 uid="uid://ry6idylv4xne"]
+
+[ext_resource type="PackedScene" uid="uid://dkg4a6o6qxc64" path="res://Snippets/health.tscn" id="1_jetp6"]
+[ext_resource type="Script" path="res://enemy.gd" id="1_q7a77"]
+[ext_resource type="PackedScene" uid="uid://bdqnsfimdvq7h" path="res://Snippets/take_damage.tscn" id="2_lgbx8"]
+[ext_resource type="PackedScene" uid="uid://dew6oukkv5q3a" path="res://Snippets/health_bar.tscn" id="3_ikkfu"]
+[ext_resource type="Texture2D" uid="uid://b2r1emh0stxi" path="res://icon.svg" id="4_duhy5"]
+[ext_resource type="Script" path="res://ChasePlayer.gd" id="5_dltly"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_udbk4"]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 5
+script = ExtResource("1_q7a77")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_udbk4")
+
+[node name="Health" parent="." instance=ExtResource("1_jetp6")]
+
+[node name="TakeDamage" parent="." node_paths=PackedStringArray("HealthNode") instance=ExtResource("2_lgbx8")]
+HealthNode = NodePath("../Health")
+TakeDamageCD = 0.5
+
+[node name="HealthBar" parent="." node_paths=PackedStringArray("HealthNode") instance=ExtResource("3_ikkfu")]
+HealthNode = NodePath("../Health")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -14)
+scale = Vector2(0.194874, 0.194874)
+texture = ExtResource("4_duhy5")
+
+[node name="Enemy" type="Node" parent="."]
+
+[node name="ChasePlayer" type="Node2D" parent="." node_paths=PackedStringArray("CharacterBody")]
+script = ExtResource("5_dltly")
+CharacterBody = NodePath("..")
+speed = 20
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="ChasePlayer"]
+avoidance_enabled = true
+debug_enabled = true

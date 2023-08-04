@@ -26,8 +26,12 @@ func _process(delta):
 				Health += RegenAmount * delta
 			else:
 				Health = MaxHealth
-	if Health <= 0:
+
+	if Health <= 0 and get_parent().name == "Player":
 		get_tree().quit()
+	elif Health <= 0 and get_parent().name == "Enemy":
+		get_parent().queue_free()
+
 func DamageTaken():
 	Regenerate = false
 	print("takeDamage")

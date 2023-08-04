@@ -1,9 +1,9 @@
-res://player.tscn
-res://RockThrow.gd
-res://player.gd
+res://enemy.tscn
+res://global.gd
+res://global.tscn
+res://ChasePlayer.gd
 res://Level.tscn
+res://player.tscn
 res://rock.tscn
-res://Snippets/take_damage.tscn
-res://rock.gd
-res://Snippets/deal_damage.tscn
-res://Pointer.gd
+res://enemy.gd
+res://SpawnPlayer.gd

@@ -2,7 +2,6 @@ extends Node2D
 
 ## Enter Hitbox area2D
 @export var HitBox : Area2D  
-
 ## What entitites it can damage
 @export_enum("Player", "Enemy", "Both") var CanHit: String
 
