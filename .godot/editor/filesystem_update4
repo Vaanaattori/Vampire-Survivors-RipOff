@@ -1,0 +1,9 @@
+res://player.tscn
+res://RockThrow.gd
+res://player.gd
+res://Level.tscn
+res://rock.tscn
+res://Snippets/take_damage.tscn
+res://rock.gd
+res://Snippets/deal_damage.tscn
+res://Pointer.gd

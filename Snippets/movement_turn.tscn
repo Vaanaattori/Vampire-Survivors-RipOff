@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdomxuy3h6a3h"]
+
+[ext_resource type="Script" path="res://Snippets/MovementTurn.gd" id="1_dmw5a"]
+
+[node name="MovementTurn" type="Node2D" node_paths=PackedStringArray("Character_Body", "Animated_Sprite")]
+script = ExtResource("1_dmw5a")
+Character_Body = NodePath("")
+Animated_Sprite = NodePath("")
+IdleAniName = "Idle"
+MovementAniName = "Walk"

@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkg4a6o6qxc64"]
+
+[ext_resource type="Script" path="res://Snippets/Health.gd" id="1_1c8lj"]
+
+[node name="Health" type="Node2D"]
+script = ExtResource("1_1c8lj")
+
+[node name="RegenCD" type="Timer" parent="."]

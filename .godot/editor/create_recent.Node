@@ -1,0 +1,16 @@
+Node2D
+Timer
+ProgressBar
+Node
+CollisionShape2D
+Area2D
+AnimationPlayer
+MeshInstance2D
+LightOccluder2D
+PointLight2D
+WorldEnvironment
+DirectionalLight2D
+Camera2D
+AnimatedSprite2D
+CharacterBody2D
+TileMap
